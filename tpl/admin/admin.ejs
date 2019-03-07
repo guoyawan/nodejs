@@ -1,0 +1,32 @@
+<%include ./header.ejs%>
+<div class="container">
+    <table class="table table-bordered table-striped text-center ">
+        <tr>
+            <td>username</td>
+            <td>password</td>
+            <td>isAdmin</td>
+            <td>id</td>
+        </tr>
+        <%for(var i=0; i<Data.length; i++){%>
+        <tr>
+            <td><%=Data[i].username %></td>
+            <td><%=Data[i].password %></td>
+            <td><%=Data[i].isAdmin %></td>
+            <td><%=Data[i]._id %></td>
+        </tr>
+        <%}%>
+    </table>
+    <nav>
+        <ul class="pager">
+            <li><a href="http://localhost:8086/admin?page=<%=page-1 %>">上一页</a></li>
+            <li>一共 <b><%=count%></b> 条数据，每页 <b><%=limit %></b> 条,当前<b><%=page %></b>/<b><%=pages %></b>页 </li>
+            <%if(page===pages){%>
+            <li><a href="javascript:;">下一页</a></li>
+            <%} else{%>
+            <li><a href="http://localhost:8086/admin?page=<%=page+1 %>">下一页</a></li>
+            <%}%>
+
+        </ul>
+    </nav>
+</div>
+<%include ./footer.ejs%>

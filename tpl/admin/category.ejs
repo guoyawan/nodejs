@@ -1,0 +1,106 @@
+<% include ./header.ejs %>
+<div class="container">
+    <table class="table table-bordered table-striped text-center ">
+        <tr>
+            <td>ID</td>
+            <td>类名</td>
+            <td>操作</td>
+        </tr>
+        <% for(var i = 0;i < data.length;i++){ %>
+        <tr>
+            <td><%= data[i]._id %></td>
+            <td><%= data[i].name %></td>
+            <td class="box1">
+                <a  class="btn revise" href="javascript:;" data-toggle="modal" data-target="#exampleModal">修改</a>
+                <a href="javascript:;">删除</a>
+                <input type="hidden" class="int" value="<%= data[i]._id %>">
+            </td>
+        </tr>
+        <% } %>
+    </table>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">修改分类</h4>
+            </div>
+            <form>
+              <div class="modal-body">
+                <label for="recipient-name" class="control-label">新分类：</label>
+                <input type="text" class="form-control" id="recipient-name">
+             </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="sub">submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.box1').find('a:nth-child(2)').on('click', function () {
+            var con = window.confirm('确认删除吗？')
+            var id = $(this).parent().find('input').eq(0).val()
+            if (con) {
+                $.ajax({
+                    url: 'category/del',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        id: id
+                    },
+                    success: function (json) {
+                        if (json.code === 0) {
+                            alert(json.msg);
+                            window.location.reload()
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            }
+        });
+
+        $('.box1').find('a:nth-child(1)').on('click', function () {
+
+            var id = $(this).parent().find('input').eq(0).val();
+            var name = $(this).parent().parent().find('td').eq(1).html();
+
+            $('#sub').on('click', function () {
+                if ($('#recipient-name').val() === name) {
+                    $('#recipient-name').val('类名重复').fadeOut().fadeIn(function () {
+                        $('#recipient-name').val('')
+                    });
+                } else if ($('#recipient-name').val() === '') {
+                    $('#recipient-name').val('类名不能为空').fadeOut().fadeIn(function () {
+                        $('#recipient-name').val('')
+                    })
+                }else{
+
+                    $.ajax({
+                        url:'category/revise',
+                        type:'post',
+                        dataType:'json',
+                        data:{
+                            id:id,
+                            name:$('#recipient-name').val()
+                        },
+                        success:function (suc) {
+                           if(suc.code===1){
+                               window.location.reload();
+                           }
+                            console.log(suc);
+                        },
+                        error:function (err) {
+                            console.log(err);
+                        }
+                    })
+                }
+            });
+
+        });
+    })
+</script>
+<% include ./footer.ejs %>

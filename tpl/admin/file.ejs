@@ -1,0 +1,38 @@
+<%include ./header.ejs%>
+<div class="container">
+        <p class="m-top"><b>新添分类</b></p>
+        <input type="text" class="form-control" placeholder="Text input" id="txt">
+        <p class="alert alert-null">新分类添加失败</p>
+        <p class="alert alert-suc">新分类添加成功</p>
+        <button type="button" class="btn btn-default" id="btn">Submit</button>
+</div>
+<script>
+    $(function () {
+        $('#btn').on('click',function () {
+            if ( $('#txt').val()==='' ){
+                $('.alert-null').fadeIn().fadeOut().fadeIn().fadeOut();
+            } else{
+                $.ajax({
+                     url:'/admin/file',
+                     // dataType:'json',
+                     type:'post',
+                     data:{
+                         name:$('#txt').val()
+                     },
+                    success:function (suc) {
+                         console.log(suc);
+                        if (suc.code===1) {
+                            $('.alert-null').fadeIn().fadeOut().fadeIn().fadeOut();
+                        }else{
+                            $('.alert-suc').fadeIn().fadeOut().fadeIn().fadeOut();
+                        }
+                    },
+                    error:function (err) {
+                        console.log(err);
+                    }
+                })
+            }
+        })
+    })
+</script>
+<%include ./footer.ejs%>

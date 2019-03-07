@@ -1,0 +1,27 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "a document",
+  "main": "app.js",
+  "scripts": {
+    "test": "even"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "even",
+  "license": "ISC",
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "cookies": "^0.7.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-static": "^1.2.6",
+    "moment": "^2.24.0",
+    "swig": "^1.4.2"
+  }
+}

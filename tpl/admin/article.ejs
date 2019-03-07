@@ -1,0 +1,58 @@
+<%include ./header.ejs%>
+<div class="container">
+    <form style="margin-top: 20px;">
+        <div class="form-group">
+            <label for="exampleInputEmail1">title</label>
+            <input id="title" type="text" class="form-control" placeholder="Text input">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">description</label>
+            <textarea id="des" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">content</label>
+            <textarea id="con" class="form-control" rows="15"></textarea>
+        </div>
+        <label for="exampleInputPassword1">category</label>
+        <select class="form-control" id="sel">
+            <%for(var i=0;i<cate.length;i++){%>
+            <option abc="<%=cate[i].name%>" value="<%=cate[i]._id%>"><%=cate[i].name%></option>
+            <%}%>
+        </select>
+            <button type="submit" style="margin-top: 20px;" class="btn btn-default" id="article-btn">Submit</button>
+    </form>
+</div>
+<script>
+    $(function () {
+         $('#article-btn').on('click',function () {
+           var a =$('#sel').find('option:selected').attr('abc');
+           console.log(a);
+             if($('#title').val()==='' && $('#des').val()==='' && $('#con').val()===''){
+                 alert('所有内容均不可为空');
+             }else{
+                 $.ajax({
+                     url:'/admin/article/con',
+                     type:'post',
+                     dataType:'json',
+                     data:{
+                         title:$('#title').val(),
+                         des:$('#des').val(),
+                         con:$('#con').val(),
+                         sel:$('#sel').val(),
+                         names:$('#sel').find('option:selected').attr('abc')
+                     },
+                     success:function (suc) {
+                         if (suc.code===0){
+                            // console.log(suc);
+                             alert('提交成功！');
+                         }
+                     },
+                     error:function (err) {
+                         console.log(err);
+                     }
+                 })
+             }
+         })
+    })
+</script>
+<%include ./footer.ejs%>
