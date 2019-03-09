@@ -82,4 +82,31 @@ $(function () {
         })
     });
 
+    $('#category  li a').on('click',function () {
+        var id=$(this).attr('nameid');
+        $.ajax({
+            url:'/name',
+            type:'post',
+            dataType:'json',
+            data:{
+                id:id
+            },
+            success:function (suc) {
+                $('#boxs').html('');
+                console.log(suc);
+                for (var i=0;i<suc.length;i++){
+                    var txt2=$("<div class=\"thumbnail\"> <h3 class=\"text-center\">"+suc[i].title+"</h3>\n"+
+                        "<span class=\"text-center\">作者：<em>admin</em>时间：<em>"+suc[i].date+"</em>阅读：<em>"+suc[i].read +"</em>评论：<em>"+suc[i].discuss.length+"</em></span>\n" +
+                        "<p>"+ suc[i].des+"</p>\n"+
+                        "<a href=\"http://localhost:8086/read?id='+con[i]._id+'\" class=\"btn or\" role=\"button\">阅读全文</a>\n" +
+                        "</div>");
+                    $("#boxs").prepend(txt2);
+                }
+            },
+            error:function (err) {
+                console.log(err)
+            }
+        })
+    })
+
 });

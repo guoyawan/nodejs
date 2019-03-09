@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>后台管理</title>
+    <link rel="stylesheet" href="../../public/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../../public/css/bootstrap.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <script src="../../public/js/jquery.1.10.2.min.js"></script>
+    <script src="../../public/js/bootstrap.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:;">bootstrap</a>
+        </div>
+        <div class="collapse navbar-collapse  text-center" id="bs-example-navbar-collapse-1">
+            <ul class="text-center nav navbar-nav">
+                <li><a href="http://localhost:8086/admin">用户数据</a></li>
+                <li><a href="http://localhost:8086/admin/category">分类管理</a></li>
+                <li><a href="http://localhost:8086/admin/file">新增分类</a></li>
+                <li><a href="http://localhost:8086/admin/article">新增文章</a></li>
+                <li><a href="http://localhost:8086/admin/revise">修改文章</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://localhost:8086">首页</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container">
+    <div class="modal fade" style="display: block;opacity: 1;top:250px;overflow: visible;"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel">Revise</h4>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <label for="recipient-name" class="control-label">new title：</label>
+                        <input type="text" class="form-control" id="recipient-name" value="<%=info.title%>">
+                    </div>
+                    <div class="modal-body">
+                        <label >new description:</label>
+                        <input id="des" type="text" class="form-control" value="<%=info.des%>">
+                    </div>
+                    <div class="modal-body">
+                        <label >new content:</label>
+                        <textarea id="con" class="form-control" rows="15"><%=info.con%></textarea>
+                    </div>
+                    <div class="modal-body">
+                        <label>new category:</label>
+                        <select class="form-control" id="sel">
+                            <%for(var i=0;i<cates.length;i++){%>
+                            <option abc="<%=info._id%>" value="<%=cates[i]._id%>"><%=cates[i].name%></option>
+                            <%}%>
+                        </select>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="sub">submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+
+            $('#sub').on('click', function () {
+                if($('#recipient-name').val()==='' && $('#des').val()==='' && $('#con').val() ===''){
+                    alert('内容均不可为空')
+                }else{
+                    $.ajax({
+                        url:'control/rev',
+                        type:'post',
+                        dataType:'json',
+                        data:{
+                            id:$('#sel').find('option:selected').attr('abc'),
+                            title:$('#recipient-name').val(),
+                            des:$('#des').val(),
+                            con:$('#con').val(),
+                            sel:$('#sel').val(),
+                            names:$('#sel').find('option:selected').text()
+                        },
+                        success:function (suc) {
+                            if(suc.code===30){
+                                alert('提交成功')
+                            }
+                        },
+                        error:function (err) {
+                            console.log(err);
+                        }
+                    })
+                }
+            });
+    });
+</script>
+</body>
+</html>

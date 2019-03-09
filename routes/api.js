@@ -6,6 +6,8 @@ var router = express.Router();//设置路由
 
 var UserTable = require('../models/User');//引入建立的数据库
 
+var article=require('../models/Article');
+
 var respousetext = {};
 
 router.use(function (req, res, next) {
@@ -127,8 +129,6 @@ router.get('/user/logout',function (req,res) {
     res.send(respousetext);
     res.end();
 });//清空cookies，恢复页面初始效果
-
-
 
 
 module.exports = router;

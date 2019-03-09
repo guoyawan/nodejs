@@ -1,0 +1,25 @@
+<% include ./head.ejs %>
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7 col-xs-12 col-md-7">
+                <div class="thumbnail">
+                    <h3 class="text-center"><%= con.title %></h3>
+                    <span class="text-center">作者：<em>admin</em>时间：<em><%= con.date %></em>阅读：<em><%= con.read %></em>评论：<em><%= con.discuss.length %></em></span>
+                    <p><%= con.con %></p>
+                </div>
+                <div class="thumbnail">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="请输入留言">
+                        <span class="input-group-btn">
+                           <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <% include ./right.ejs %>
+        </div>
+    </div>
+</div>
+</div>
+<% include ./foot.ejs %>

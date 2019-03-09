@@ -183,5 +183,38 @@ router.get('/revise/del',function (req,res) {
         res.redirect('/admin/revise');
     })
 });
+//修改文章
+router.get('/control',function (req,res) {
+    var id=req.query.id;
+    article.findOne({_id:id}).then(function (info) {
+        fileTable.find().then(function (cates) {
+            res.render('admin/revising.ejs',{info:info,cates:cates})
+        })
+    })
+});
+
+router.post('/control/rev',function (req,res) {
+    console.log(req+3);
+    var id=req.body.id;
+    var title=req.body.title;
+    var des=req.body.des;
+    var con=req.body.con;
+    var sel=req.body.sel;
+    var names=req.body.names;
+    article.update({
+        _id:id
+    },{
+        _id:id,
+        title:title,
+        des:des,
+        con:con,
+        sel:sel,
+        names:names
+    }).then(function (info) {
+        json.code=30;
+        json.msg='修改成功';
+        res.send(json);
+    })
+});
 
 module.exports = router;

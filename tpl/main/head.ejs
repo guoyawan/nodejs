@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>前端首页</title>
+    <link rel="stylesheet" href="public/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="public/css/bootstrap.css">
+    <link rel="stylesheet" href="public/css/style.css">
+    <script src="public/js/jquery.1.10.2.min.js"></script>
+    <script src="public/js/bootstrap.js"></script>
+    <script src="public/js/weibo.js"></script>
+</head>
+<body>
+<div class="top text-center">
+    <img class="ban" src="public/images/1.jpg" alt="ban">
+    <img class="logo" src="public/images/2.jpg" alt="LOGO">
+</div>
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">首页</a>
+        </div>
+        <div class="collapse navbar-collapse  text-center" id="bs-example-navbar-collapse-1">
+            <ul class="text-center nav navbar-nav" id="category">
+                <% for(var i = 0;i < datas.length;i++){ %>
+                <li><a nameid='<%=datas[i]._id %>' href="javascript:;"><%= datas[i].name %></a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>

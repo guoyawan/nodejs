@@ -1,15 +1,14 @@
 //渲染主页面
 
-var express=require('express');
+var express = require('express');
 
-var router=express.Router();
+var router = express.Router();
 
-var fileTable=require('../models/File');
+var fileTable = require('../models/File');
 
-var article=require('../models/Article');
+var article = require('../models/Article');
 
-
-router.get('/',function (req,res) {
+router.get('/', function (req, res) {
 
     var limit = 5;
 
@@ -21,20 +20,48 @@ router.get('/',function (req,res) {
 
         article.count().then(function (count) {
 
-           article.find().limit(limit).skip(skip).then(function (newinfo) {
-
+            article.find().limit(limit).skip(skip).then(function (newinfo) {
                 var pages = Math.ceil(count / limit);
 
-                res.render('main/weibo.ejs',{
+                res.render('main/weibo.ejs', {
                     usersinfo: req.users,
-                    datas:info,
-                    con:newinfo,
+                    datas: info,
+                    con: newinfo,
                     pages: pages,
                     page: page
 
-                  });
                 });
-            })
-        });
+            });
+        })
+    });
 });
-module.exports =router;
+
+router.get('/read', function (req, res) {
+    var id = req.query.id;
+    fileTable.find().then(function (info) {
+        article.findOne({
+            _id: id
+        }).then(function (newinfo) {
+            newinfo.read++;
+            newinfo.save();
+            res.render('main/reading.ejs', {
+                usersinfo: req.users,
+                datas: info,
+                con: newinfo,
+            });
+        });
+    });
+});
+
+router.post('/name',function (req,res) {
+   var id=req.body.id;
+  article.find({
+      sel:id
+  }).then(function (info) {
+      console.log(info);
+      res.send(info);
+      res.end();
+  })
+});
+
+module.exports = router;

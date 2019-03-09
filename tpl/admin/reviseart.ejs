@@ -3,56 +3,26 @@
     <table class="table table-bordered table-striped text-center ">
         <tr>
             <td>id</td>
-            <td>title</td>
-            <td>description</td>
-            <td>content</td>
+            <td>标题</td>
+            <td>分类</td>
+            <td>阅读量</td>
+            <td>评论</td>
             <td>操作</td>
         </tr>
         <%for(var i=0;i<info2.length;i++){%>
-        <tr>
+        <tr class="revise-box">
             <td><%=info2[i]._id%></td>
             <td><%=info2[i].title%></td>
-            <td><%=info2[i].des%></td>
-            <td><%=info2[i].con%></td>
-            <td class="box1">
-                <a  class="btn revise" href="javascript:;" data-toggle="modal" data-target="#exampleModal">修改</a>
+            <td><%=info2[i].names%></td>
+            <td><%=info2[i].read%></td>
+            <td><%=info2[i].discuss.length%></td>
+            <td class="box2">
+                <a  class="btn revise" href="http://localhost:8086/admin/control?id=<%=info2[i]._id%>">修改</a>
                 <a href="http://localhost:8086/admin/revise/del?id=<%=info2[i]._id%>">删除</a>
                 <input type="hidden" class="int" value="将采购框架合同">
             </td>
         </tr>
         <%}%>
     </table>
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Revise</h4>
-            </div>
-            <form>
-                <div class="modal-body">
-                    <label for="recipient-name" class="control-label">new title：</label>
-                    <input type="text" class="form-control" id="recipient-name">
-                </div>
-                <div class="modal-body">
-                    <label for="exampleInputEmail1">new description</label>
-                    <input id="title" type="text" class="form-control" placeholder="Text input">
-                </div>
-                <div class="modal-body">
-                    <label for="exampleInputPassword1">new content</label>
-                    <textarea id="con" class="form-control" rows="15"></textarea>
-                </div>
-                <label for="exampleInputPassword1">category</label>
-                <select class="form-control" id="sel">
-                    <%for(var i=0;i<cates.length;i++){%>
-                    <option abc="<%=cates[i].name%>" value="<%=cates[i]._id%>"><%=cates[i].name%></option>
-                    <%}%>
-                </select>
-            </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="sub">submit</button>
-            </div>
-        </div>
-    </div>
 </div>
 <% include ./footer.ejs %>
