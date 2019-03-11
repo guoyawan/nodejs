@@ -6,20 +6,61 @@
                 <div class="thumbnail">
                     <h3 class="text-center"><%= con.title %></h3>
                     <span class="text-center">作者：<em>admin</em>时间：<em><%= con.date %></em>阅读：<em><%= con.read %></em>评论：<em><%= con.discuss.length %></em></span>
-                    <p><%= con.con %></p>
+                    <p id="con-all" con-id="<%=con._id%>"><%= con.con %></p>
                 </div>
                 <div class="thumbnail">
+                    <%if (usersinfo.username===undefined){ %>
+                    <p>请登录后留言</p>
+                    <%}else{%>
+                    <p id="user">你好，欢迎 <em><%=usersinfo.username%></em>留言</p>
+                    <%}%>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="请输入留言">
-                        <span class="input-group-btn">
-                           <button class="btn btn-default" type="button">Go!</button>
-                        </span>
+                      评论：<input type="text" placeholder="请输入留言" id="msg">
+                        <input type="button" value="发送" id="send">
+                        <div id="msg-content">
+                            <%for(var i=con.discuss.length-1;i>=0;i--){%>
+                            <P>昵称：<%=con.discuss[i].username%>  时间：<%=con.discuss[i].time%></p> <P>留言内容：<%=con.discuss[i].content%></P>
+                            <%}%>
+                        </div>
                     </div>
                 </div>
             </div>
-            <% include ./right.ejs %>
+           <% include ./right.ejs %>
         </div>
     </div>
 </div>
 </div>
+<script>
+    $('#send').on('click',function () {
+        if ($('#msg').val()===''){
+            alert('留言不能为空');
+        }else{
+            $('#msg-content').html('');
+            var id=$('#con-all').attr('con-id');
+            var discuss=$('#msg').val();
+            var username=$('#user').find('em').html();
+            $.ajax({
+                url:'read/msg',
+                type:'post',
+                dataType:'json',
+                data:{
+                    id:id,
+                    discuss:discuss,
+                    username:username
+                },
+                success:function (suc) {
+                    for(var i=0;i<suc.length;i++){
+                        var text=$('<P>昵称：'+suc[i].username+' 时间：'+suc[i].time+'</p><P>留言内容：'+suc[i].content+'</P>')
+                        $('#msg-content').prepend(text);
+                    };
+                    $('#msg').val('');
+                },
+                error:function (err) {
+                    console.log(err)
+                }
+            })
+        }
+    }
+    );
+</script>
 <% include ./foot.ejs %>

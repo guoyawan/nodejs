@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-sm-7 col-xs-12 col-md-7" id="boxs">
                 <% for(var i = con.length - 1; i >= 0;i--){ %>
-                <div class="thumbnail">
+                <div class="thumbnail" id="box1">
                     <h3 class="text-center"><%= con[i].title %></h3>
                     <span class="text-center">作者：<em>admin</em>时间：<em><%= con[i].date %></em>阅读：<em><%= con[i].read %></em>评论：<em><%= con[i].discuss.length %></em></span>
                     <p><%= con[i].des %></p>
@@ -14,7 +14,7 @@
 
                 <div class="thumbnail main-foot text-center">
                     <% if(page === 1){ %>
-                    <i>没有上一页了</i>
+                    <i >没有上一页了</i>
                     <% }else{ %>
                     <i><a href="http://localhost:8086?page=<%=page-1 %>">上一页</a></i>
                     <% } %>

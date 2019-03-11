@@ -35,8 +35,9 @@ router.get('/', function (req, res) {
         })
     });
 });
-
+//阅读页面渲染
 router.get('/read', function (req, res) {
+    console.log(req.user);
     var id = req.query.id;
     fileTable.find().then(function (info) {
         article.findOne({
@@ -52,9 +53,30 @@ router.get('/read', function (req, res) {
         });
     });
 });
+//评论
+router.post('/read/msg',function (req,res) {
+    var id=req.body.id;
+    var discuss=req.body.discuss;
+    var username=req.body.username;
+    article.findOne({
+        _id:id
+    }).then(function (info) {
+        info.discuss.push({
+            username:username,
+            content:discuss,
+            time:new Date()
+        });
+        return info.save();
+        console.log(info+'info');
+    }).then(function (info2) {
+        res.send(info2.discuss);
+        res.end();
+    })
+});
 
 router.post('/name',function (req,res) {
-   var id=req.body.id;
+    var id=req.body.id;
+
   article.find({
       sel:id
   }).then(function (info) {
